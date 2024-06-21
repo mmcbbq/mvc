@@ -13,5 +13,7 @@ class UserController extends Controller
     {
         $this->view("user/create");
     }
+
+
 }
 
