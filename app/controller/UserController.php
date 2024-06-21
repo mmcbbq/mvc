@@ -4,7 +4,10 @@ class UserController extends Controller
 {
     public function index(string $data)
     {
-        //todo model
+
+        $user = new User();
+        $result = $user->findAll();
+        print_r($result);
         $this->view("user/index");
 
     }
