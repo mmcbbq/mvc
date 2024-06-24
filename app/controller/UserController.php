@@ -27,6 +27,8 @@ class UserController extends Controller
 
     public function create():void
     {
+        $user = new User();
+        $user->create(["name"=>"Bob","email"=>"Bob@bob.de","password"=>"geheim"]);
         $this->view("user/create");
     }
 
@@ -38,7 +40,10 @@ class UserController extends Controller
 
     public function delete($id)
     {
-        echo 'delete';
+        $user = new User();
+        $data = $user->findById($id);
+        $user->delete($id);
+        $this->view('user/delete',['user'=>$data]);
     }
 
 

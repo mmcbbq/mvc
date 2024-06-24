@@ -21,8 +21,13 @@ abstract class Database
         $con = $this->connect();
         $stmt = $con->prepare($sql);
         $check = $stmt->execute($data);
-        $result = $stmt->fetchAll(PDO::FETCH_CLASS,$this->tablename);
-        return $result;
+        if ($check){
+            $result = $stmt->fetchAll(PDO::FETCH_CLASS,$this->tablename);
+            if (is_array($result) && count($result)){
+                return $result;
+            }
+        }
+        return false;
     }
 
 
