@@ -47,7 +47,6 @@ class Model extends Database
         $query.= $columns.') VALUES ('.$params.")";
 //        echo $query;
         $this->query($query,$data);
-
     }
 
     public function delete(int $id)

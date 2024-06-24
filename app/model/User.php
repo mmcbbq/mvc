@@ -4,7 +4,6 @@ class User extends Model
 
     protected string $tablename = 'User';
     protected int $id;
-
     protected string $name;
     protected string $email;
     protected string $password;
