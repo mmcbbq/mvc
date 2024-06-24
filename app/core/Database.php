@@ -2,7 +2,7 @@
 
 abstract class Database
 {
-    protected string $name = "abstract";
+    protected string $tablename = "abstract";
 
     private function connect()
     {
@@ -21,7 +21,7 @@ abstract class Database
         $con = $this->connect();
         $stmt = $con->prepare($sql);
         $check = $stmt->execute($data);
-        $result = $stmt->fetchAll(PDO::FETCH_CLASS,$this->name);
+        $result = $stmt->fetchAll(PDO::FETCH_CLASS,$this->tablename);
         return $result;
     }
 

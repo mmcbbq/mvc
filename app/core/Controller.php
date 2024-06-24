@@ -4,10 +4,22 @@
 {
     public function view(string $name, array $data =[]): void
     {
-        $viewFile = '../app/view/' . $name . '.php';
+
+        $loader = new \Twig\Loader\FilesystemLoader('../app/view');
+        $twig = new \Twig\Environment($loader);
+
+
+
+
+
+        $viewFile = '../app/view/' . $name . '.html.twig';
 
         if (file_exists($viewFile)) {
-            require $viewFile;
+
+            echo $twig->render("$name.html.twig",$data);
+
+
+//            require $viewFile;
         } else {
             require '../app/view/PageNotFound.php';
         }

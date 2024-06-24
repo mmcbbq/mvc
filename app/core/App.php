@@ -43,13 +43,16 @@ class App
             if (!empty($url[1])) {
                 if (method_exists($controller, $url[1])) {
                     $this->methode = $url[1];
-                    call_user_func_array([$controller, $this->methode], ['daten']);
+//                    todo if
+
+                    $id = $url[2] ?? "";
+                    call_user_func_array([$controller, $this->methode], [$id]);
                 } else {
 
                     $this->pageNotFound();
                 }
             }else{
-                call_user_func_array([$controller, $this->methode], ['daten']);
+                call_user_func_array([$controller, $this->methode], []);
             }
         } else {
             $this->pageNotFound();
