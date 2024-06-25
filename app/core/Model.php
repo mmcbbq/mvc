@@ -23,9 +23,24 @@ class Model extends Database
 
     }
 
-    public function update()
+    public function update(array $data)
     {
-        
+        $sql ="Update $this->tablename set "; //"Update $this->tablename set (name = :name, email = :email) where id=:id;
+
+        $columns = "";
+        $params = "";
+        foreach ($data as $key=>$column){
+            if ($key === 'id'){
+                continue;
+            }
+            $columns .= $key. "= :".$key.", ";  // name, email, password,
+
+        }
+        $columns = trim($columns, ", ");
+
+        $sql.= $columns .' where id = :id' ;
+//        echo $sql;
+        $this->query($sql, $data);
     }
 
     public function create(array $data)
@@ -36,15 +51,15 @@ class Model extends Database
         $columns = "";
         $params = "";
         foreach ($data as $key=>$column){
-            $columns .= $key. ", ";
-            $params .= ":".$key.", ";
+            $columns .= $key. ", ";  // name, email, password,
+            $params .= ":".$key.", "; // :name, :email, :password,
         }
 
         $columns = trim($columns, ", ");
         $params = trim($params,", ");
 
 
-        $query.= $columns.') VALUES ('.$params.")";
+        $query.= $columns.') VALUES ('.$params.")"; //"INSERT INTO User (name, email, password) VALUES( :name, :email, :password )
 //        echo $query;
         $this->query($query,$data);
     }

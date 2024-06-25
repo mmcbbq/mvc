@@ -27,15 +27,15 @@ class UserController extends Controller
     public function create(): void
     {
         if ($_SERVER['REQUEST_METHOD'] === "POST") {
-            if ($_POST['password'] === $_POST['checkpassword']){
+            if ($_POST['password'] === $_POST['checkpassword']) {
                 $user = new User();
                 unset($_POST['checkpassword']);
-                $_POST["password"] = password_hash($_POST['password'],PASSWORD_BCRYPT);
+                $_POST["password"] = password_hash($_POST['password'], PASSWORD_BCRYPT);
                 $user->create($_POST);
                 echo 'In die Datenbank';
                 $id = $user->getLastId();
                 header("refresh:5;url='http://localhost/mvc/public/user/show/$id'");
-            }else{
+            } else {
                 echo 'pw fehler';
             }
 
@@ -50,8 +50,18 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        echo 'edit';
+        $user = new User();
 
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
+            $user->update($_POST);
+            echo 'in die datenbank';
+            header("refresh:5;url='http://localhost/mvc/public/user/show/$id'");
+        } else {
+            $user = new User();
+            $user = $user->findById($id);
+            $this->view('user/update', ['user' => $user]);
+
+        }
     }
 
     public function delete($id)
