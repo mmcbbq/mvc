@@ -26,23 +26,17 @@ class UserController extends Controller
 
     public function create(): void
     {
-        if ($_SERVER['REQUEST_METHOD'] === "POST") {
-            if ($_POST['password'] === $_POST['checkpassword']) {
-                $user = new User();
-                unset($_POST['checkpassword']);
+        $user = new User();
+        if ($_SERVER['REQUEST_METHOD'] === "POST" && $user->validate($_POST)) {
                 $_POST["password"] = password_hash($_POST['password'], PASSWORD_BCRYPT);
                 $user->create($_POST);
                 echo 'In die Datenbank';
                 $id = $user->getLastId();
                 header("refresh:5;url='http://localhost/mvc/public/user/show/$id'");
-            } else {
-                echo 'pw fehler';
-            }
-
 
         } else {
 
-            $this->view('user/create');
+            $this->view('user/create',['errors'=>$user->getErrors(),'oldinput'=>$_POST,'test'=>["new","old"]]);
         }
 
 
@@ -71,7 +65,5 @@ class UserController extends Controller
         $user->delete($id);
         $this->view('user/delete', ['user' => $data]);
     }
-
-
 }
 

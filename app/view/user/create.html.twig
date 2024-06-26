@@ -10,13 +10,18 @@
 <body>
 <h1>Create</h1>
 
+<div>{{ oldname }}</div>
 <form action='' method='post'>
-    <input type='text' name='name' id='name'>
-    <input type='text' name='email' id='email'>
+    <input type='text' name='name' id='name' value='{{ oldinput['name'] ?? "" }}'>
+    <input type='text' name='email' id='email' value='{{ oldinput['email'] ?? "" }}'>
     <input type='text' name='password' id='password'>
     <input type='text' name='checkpassword' id='checkpassword'>
     <input type='submit'>
-
 </form>
+{% if errors is not empty %}
+{% for error in errors %}
+<div>{{ error }}</div>
+{% endfor %}
+{% endif %}
 </body>
 </html>
